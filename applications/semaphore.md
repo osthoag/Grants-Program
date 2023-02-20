@@ -1,9 +1,9 @@
-# Name of your Project
+# Semaphore
 
 > This document will be part of the terms and conditions of your agreement and therefore needs to contain all the required information about the project. Don't remove any of the mandatory parts presented in bold letters or as headlines (except for the title)! Lines starting with a `>` (such as this one) should be removed. Please use markdown instead of HTML (e.g. `![](image.png)` instead of `<img>`). 
 >
 > See the [Grants Program Process](https://github.com/w3f/Grants-Program/#pencil-process) on how to submit a proposal.
-- **Team Name:** Legal name of your team (e.g. Duo)
+- **Semaphore:** Legal name of your team (e.g. Duo)
 - **Payment Address:** BTC, Ethereum (USDT/USDC/DAI) or Polkadot/Kusama (aUSD) payment address. Please also specify the currency. (e.g. 0x8920... (DAI))
 - **[Level](https://github.com/w3f/Grants-Program/tree/master#level_slider-levels):** 1, 2 or 3
 
@@ -22,6 +22,15 @@ Please provide the following:
 - A brief description of your project.
 - An indication of how your project relates to / integrates into Substrate / Polkadot / Kusama.
 - An indication of why your team is interested in creating this project.
+
+Semaphore: a decentralized social layer for the internet
+
+The primary interaction that the Semaphore chain will have with Polkadot is that of checkpointing. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (or an L2) to manage membership in the network. The state of this contract must be synchronized (checkpointed) into the Semaphore chain. Additionally, this method of representing valid Semaphore identities will create a new type of nonfungible asset with more interesting properties and greater utility than those of the typical NFT. We think that creating a finite (yet expanding) set of aliases used for social interaction will have use cases beyond Semaphore, hopefully facilitating the development of other type 3 networks within the web3 ecosystem that use the same set of identities in order to share network effects.
+
+We are building a new type of L2 blockchain network to be a neutral communication layer for composable social apps. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (or an L2) to manage membership in the network. This enables on-chain social media, so interoperable apps can share the network effects of a unified pool of users and create a decentralized online social ecosystem. Additionally, this method of representing valid Semaphore identities will create a new type of nonfungible asset with more interesting properties and greater utility than those of the typical NFT. Unlike other protocols running on financial blockchains or federated networks, our blockchain design is accessible to users and running a service is easier because there is a guarantee of a shared state and no spam.
+
+Semaphore will host an ecosystem of social apps that will solve the myriad of problems caused by corporate control of the modern public square. Ten years from now, people will look back on the current era of fragmented online spaces, monolithic moderation, and adversarial algorithms as bizarre and confusing. Semaphore will achieve this by being a reliable, decentralized protocol that enables developers to easily build composable social apps. Additionally, our 1st party social app will demonstrate the protocol’s potential and galvanize its network effects. The timing for Semaphore is perfect. With Twitter in chaos, disillusionment with Facebook at an all time high, and crypto having recently experienced another significant downturn, it is clear that Semaphore can be an example of a better model for social media and sustainable crypto, alike.
+
 
 ### Project Details
 
@@ -51,6 +60,9 @@ Help us locate your project in the Polkadot/Substrate/Kusama landscape and what 
 - Are there any other projects similar to yours in the Substrate / Polkadot / Kusama ecosystem?
   - If so, how is your project different?
   - If not, are there similar projects in related ecosystems?
+
+We are building a new type of L2 blockchain network to be a neutral communication layer for composable social apps. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (or an L2) to manage membership in the network. Additionally, this method of representing valid Semaphore identities will create a new type of nonfungible asset with more interesting properties and greater utility than those of the typical NFT.  Our protocol targets for membership the growing user base for decentralized social media by enabling on-chain social media. This also allows for interoperable apps to share the network effects from this unified pool of users. Thus, we aim to incentivize third party app developers to build on the protocol, resulting in a decentralized online social ecosystem.
+The related projects in other ecosystems take two approaches. Decentralized/ ”decentralized” competitors use network designs that are ill suited to social apps. Lens protocol, for instance, is a prominent project that stores social interactions on Polygon using NFTs. Designs like Lens subject users to competition for blockspace with financial transactions, resulting in unpredictable fees. Other competing protocols simply use a P2P network with no consensus, which means broadcasts cannot be time stamped, that different apps' states can disagree about which broadcasts exist, and that each app must implement its own spam prevention techniques. This is the case with federated networks like Farcaster. Although Farcaster makes the same design choice to put identities on-chain, its lack of shared state cannot deliver the experience of Twitter in a truly decentralized manner. Our protocol differentiates itself from the alternatives by being a lightweight blockchain that allocates its blockspace without the use of fees. As a result the chain is accessible to users and running a service is easier because there is a guarantee of a shared state and no spam.
 
 ## Team :busts_in_silhouette:
 
