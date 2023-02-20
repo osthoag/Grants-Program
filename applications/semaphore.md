@@ -1,18 +1,10 @@
 # Semaphore
 
-> This document will be part of the terms and conditions of your agreement and therefore needs to contain all the required information about the project. Don't remove any of the mandatory parts presented in bold letters or as headlines (except for the title)! Lines starting with a `>` (such as this one) should be removed. Please use markdown instead of HTML (e.g. `![](image.png)` instead of `<img>`). 
->
-> See the [Grants Program Process](https://github.com/w3f/Grants-Program/#pencil-process) on how to submit a proposal.
-- **Semaphore:** Legal name of your team (e.g. Duo)
+- **Team Name:** Semaphore
 - **Payment Address:** BTC, Ethereum (USDT/USDC/DAI) or Polkadot/Kusama (aUSD) payment address. Please also specify the currency. (e.g. 0x8920... (DAI))
-- **[Level](https://github.com/w3f/Grants-Program/tree/master#level_slider-levels):** 1, 2 or 3
+- **[Level](https://github.com/w3f/Grants-Program/tree/master#level_slider-levels):** 2
 
-> :exclamation: *The combination of your GitHub account submitting the application and the payment address above will be your unique identifier during the program. Please keep them safe.*
 ## Project Overview :page_facing_up:
-
-If this application is in response to an RFP, please indicate this on the first line of this section.
-
-If this is an application for a follow-up grant (the continuation of an earlier, successful W3F grant), please provide name and/or pull request of said grant on the first line of this section.
 
 ### Overview
 
@@ -25,12 +17,11 @@ Please provide the following:
 
 Semaphore: a decentralized social layer for the internet
 
-The primary interaction that the Semaphore chain will have with Polkadot is that of checkpointing. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (or an L2) to manage membership in the network. The state of this contract must be synchronized (checkpointed) into the Semaphore chain. Additionally, this method of representing valid Semaphore identities will create a new type of nonfungible asset with more interesting properties and greater utility than those of the typical NFT. We think that creating a finite (yet expanding) set of aliases used for social interaction will have use cases beyond Semaphore, hopefully facilitating the development of other type 3 networks within the web3 ecosystem that use the same set of identities in order to share network effects.
+We are building a new type of L2 blockchain network to be a neutral communication layer for composable social apps. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (or an L2) to manage membership in the network. This enables on-chain social media, so interoperable apps can share the network effects of a unified pool of users and create a decentralized online social ecosystem. 
 
-We are building a new type of L2 blockchain network to be a neutral communication layer for composable social apps. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (or an L2) to manage membership in the network. This enables on-chain social media, so interoperable apps can share the network effects of a unified pool of users and create a decentralized online social ecosystem. Additionally, this method of representing valid Semaphore identities will create a new type of nonfungible asset with more interesting properties and greater utility than those of the typical NFT. Unlike other protocols running on financial blockchains or federated networks, our blockchain design is accessible to users and running a service is easier because there is a guarantee of a shared state and no spam.
+The primary interaction that the Semaphore chain will have with Polkadot is that of checkpointing. The smart contract that manages aliases on Semaphore must be synchronized (checkpointed) into the Semaphore chain. Additionally, this method of representing valid Semaphore identities will create a new type of nonfungible asset with more interesting properties and greater utility than those of the typical NFT. We think that creating a finite (yet expanding) set of aliases used for social interaction will have use cases beyond Semaphore, hopefully facilitating the development of other type 3 networks within the Web3 ecosystem that use the same set of identities in order to share network effects.
 
-Semaphore will host an ecosystem of social apps that will solve the myriad of problems caused by corporate control of the modern public square. Ten years from now, people will look back on the current era of fragmented online spaces, monolithic moderation, and adversarial algorithms as bizarre and confusing. Semaphore will achieve this by being a reliable, decentralized protocol that enables developers to easily build composable social apps. Additionally, our 1st party social app will demonstrate the protocol’s potential and galvanize its network effects. The timing for Semaphore is perfect. With Twitter in chaos, disillusionment with Facebook at an all time high, and crypto having recently experienced another significant downturn, it is clear that Semaphore can be an example of a better model for social media and sustainable crypto, alike.
-
+Semaphore will host an ecosystem of social apps that will solve the myriad of problems caused by corporate control of the modern public square. Ten years from now, people will look back on the current era of fragmented online spaces, monolithic moderation, and adversarial algorithms as bizarre and confusing. Semaphore will achieve this by being a reliable, decentralized protocol that enables developers to easily build composable social apps.
 
 ### Project Details
 
