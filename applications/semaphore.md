@@ -8,13 +8,6 @@
 
 ### Overview
 
-Please provide the following:
-
-- If the name of your project is not descriptive, a tag line (one sentence summary).
-- A brief description of your project.
-- An indication of how your project relates to / integrates into Substrate / Polkadot / Kusama.
-- An indication of why your team is interested in creating this project.
-
 Semaphore: a decentralized social layer for the internet
 
 We are building a new type of L2 blockchain network to be a neutral communication layer for composable social apps. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (or an L2) to manage membership in the network. This enables on-chain social media, so interoperable apps can share the network effects of a unified pool of users and create a decentralized online social ecosystem. 
@@ -35,11 +28,16 @@ We expect the teams to already have a solid idea about your project's expected f
 - What your project is _not_ or will _not_ provide or implement
   - This is a place for you to manage expectations and to clarify any limitations that might not be obvious
 
+Semaphore is a blockchain without a cryptocurrency. Instead, Semaphore uses “crypto-identities” or “aliases.” Each alias has a unique integer, a pubkey, and a human readable “nym.” The set of aliases is maintained on a separate type 2 network, such as Polkadot. However, aliases are much more than simple NFT’s (non-functional tokens), nodes that run the semaphore network sync the state of the alias smart contract and only accept broadcasts/connections signed by pubkeys belonging to valid aliases. This means that the state of a smart contract on Polkadot can control the set of valid users on the Semaphore network. The rules for the total number of aliases able to be minted can follow a predetermined function, be controlled by an alias vote, etc.
 
-Things that shouldn’t be part of the application (see also our [FAQ](../docs/faq.md)):
-- The (future) tokenomics of your project 
-- For non-infrastructure projects—deployment and hosting costs, maintenance or audits
-- Business-oriented activities (marketing, business planning), events or outreach
+The lifecycle of a broadcast starts when it is signed by a user. The message includes the user’s alias, signature, the message itself, and a timestamp. Time on Semaphore exists as discrete epochs of 6 seconds, so the timestamp says which epoch the broadcast occurs in. Next, the broadcast is relayed to Semaphore nodes, who will relay the message to their peers. This process is called the “initial relay.” At the end of the initial relay, it is possible that nodes will have seen different sets of broadcasts. The epoch vote is a BFT process that will allow nodes to reach consensus on which broadcasts were seen by a majority of nodes during the initial relay. Once the epoch vote has terminated, a block containing each accepted broadcast is constructed by each node. To reach consensus, nodes will iteratively sample each other in a process similar to the Avalanche consensus mechanism. At the end of the epoch vote process, with very high probability all broadcasts with a correct timestamp will be included in the block and all nodes will have produced identical blocks. 
+
+The epoch vote on its own is insufficient, however, because it is a subjective process: offline nodes cannot verify the output like they can with PoW or PoS. The missing piece is “proof of engagement.” Each block has a “chain commitment,” which is the hash of previous blocks. The chain commitment is analogous to the previous block hash in a typical blockchain. The chain commitment is also what broadcasts use as a timestamp. Chain commitments mean that if there is ever a blockchain fork, broadcasts are only valid on a single fork. When an alias makes a broadcast with a particular chain commitment, it is said to have committed to the fork that the chain commitment corresponds to. If there is a blockchain fork that has reached a sufficient depth, nodes will consider the chain that has more commitments after the fork to be valid, meaning it has the higher proof of engagement.
+
+One of the purposes of Semaphore’s blockchain architecture is to enable spam prevention, which is achieved through Semaphore’s karma system. The karma system is a dynamic rate limit that also enables popular aliases to have greater access during times of congestion. The goal of  the karma system is to fairly allocate blockspace without the use of fees. A good design will ensure that the total throughput never exceeds the capacity of the network but never throttles users so much that blocks are not full even though users want to post.
+
+Another purpose of Semaphore’s blockchain architecture is to enable moderation. Moderation is important on social media, especially when users are able to post to a decentralized, censorship resistant system. The Semaphore philosophy is that users should have maximum control over the interactions with their own content and that different users should have the freedom to implement different rules according to their own values. Each alias is able to set a blocklist.  Additionally, a broadcast that is not a reply to another broadcast, can define a “paradigm,” or set of rules that apply to it and all descendent broadcasts (replies, replies to replies, etc). This means that users can moderate the discussions that take place under their broadcasts. Paradigms enable precise control over how interactions can occur. We think it is likely that different organizations would maintain sets of aliases that they consider to be spam, misinformation, hateful, etc.
+
 
 ### Ecosystem Fit
 
