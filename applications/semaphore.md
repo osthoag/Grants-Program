@@ -21,6 +21,7 @@ Semaphore will host an ecosystem of social apps that will solve the myriad of pr
 Semaphore is a blockchain without a cryptocurrency. Instead, Semaphore uses “crypto-identities” or “aliases.” Each alias has a unique integer, a pubkey, and a human readable “nym.” The set of aliases is maintained on a separate type 2 network, such as Polkadot. However, aliases are much more than simple NFT’s (non-functional tokens), nodes that run the semaphore network sync the state of the alias smart contract and only accept broadcasts/connections signed by pubkeys belonging to valid aliases. This means that the state of a smart contract on Polkadot can control the set of valid users on the Semaphore network. The rules for the total number of aliases able to be minted can follow a predetermined function, be controlled by an alias vote, etc.
 
 **Protocol**
+
 The lifecycle of a broadcast starts when it is signed by a user. The message includes the user’s alias, signature, the message itself, and a timestamp. Time on Semaphore exists as discrete epochs of 6 seconds, so the timestamp says which epoch the broadcast occurs in. Next, the broadcast is relayed to Semaphore nodes, who will relay the message to their peers. This process is called the “initial relay.” At the end of the initial relay, it is possible that nodes will have seen different sets of broadcasts. The epoch vote is a BFT process that will allow nodes to reach consensus on which broadcasts were seen by a majority of nodes during the initial relay. Once the epoch vote has terminated, a block containing each accepted broadcast is constructed by each node. To reach consensus, nodes will iteratively sample each other in a process similar to the Avalanche consensus mechanism. At the end of the epoch vote process, with very high probability all broadcasts with a correct timestamp will be included in the block and all nodes will have produced identical blocks. 
 
 The epoch vote on its own is insufficient, however, because it is a subjective process: offline nodes cannot verify the output like they can with PoW or PoS. The missing piece is “proof of engagement.” Each block has a “chain commitment,” which is the hash of previous blocks. The chain commitment is analogous to the previous block hash in a typical blockchain. The chain commitment is also what broadcasts use as a timestamp. Chain commitments mean that if there is ever a blockchain fork, broadcasts are only valid on a single fork. When an alias makes a broadcast with a particular chain commitment, it is said to have committed to the fork that the chain commitment corresponds to. If there is a blockchain fork that has reached a sufficient depth, nodes will consider the chain that has more commitments after the fork to be valid, meaning it has the higher proof of engagement.
@@ -29,7 +30,7 @@ One of the purposes of Semaphore’s blockchain architecture is to enable spam p
 
 Another purpose of Semaphore’s blockchain architecture is to enable moderation. Moderation is important on social media, especially when users are able to post to a decentralized, censorship resistant system. The Semaphore philosophy is that users should have maximum control over the interactions with their own content and that different users should have the freedom to implement different rules according to their own values. Each alias is able to set a blocklist.  Additionally, a broadcast that is not a reply to another broadcast, can define a “paradigm,” or set of rules that apply to it and all descendent broadcasts (replies, replies to replies, etc). This means that users can moderate the discussions that take place under their broadcasts. Paradigms enable precise control over how interactions can occur. We think it is likely that different organizations would maintain sets of aliases that they consider to be spam, misinformation, hateful, etc.
 
-The full documentation on the Semaphore protocol and its security can be found in the [Semaphore White Paper](https://github.com/SirLemmings/Semaphore-Demo/blob/main/Semaphore%20White%20Paper.pdf).
+You can watch a [video explanation](https://youtu.be/tXhwmqeeuto) of this process. Additionally, the full documentation on the Semaphore protocol and its security can be found in the [Semaphore White Paper](https://github.com/SirLemmings/Semaphore-Demo/blob/main/Semaphore%20White%20Paper.pdf).
 
 **Technology Stack**
 - ink! or Solidity
@@ -72,9 +73,7 @@ The related projects in other ecosystems take two approaches. Decentralized/ ”
 
 ### Team's experience
 
-Please describe the team's relevant experience. If your project involves development work, we would appreciate it if you singled out a few interesting projects or contributions made by team members in the past. 
-
-If anyone on your team has applied for a grant at the Web3 Foundation previously, please list the name of the project and legal entity here.
+Building a network like Semaphore requires solving a lot of operations research style problems to allocate resources, validate network security, etc. We both have strong academic backgrounds in operations research and computer science. Alex has been programming for a very long time. In the past, he developed new software tools to solve Markov decision process problems (github link?), designed and built custom 3d printers, and designed a more comfortable and effective mask for a hackathon. Additionally, he has spent far too much time in undergrad learning the crypto stuff necessary to build a novel system like this. Oscar has similar programming experience, having worked with evolutionary algorithms, CNNs, and reinforcement learning agents in the context of academic, research, and industry environments. His journey into blockchains started with this project and continued through his graduate coursework at Stanford. Before working together on Semaphore, we collaborated on the simulation of honeybee and termite colonies for research in the application of information theory to eusocial insects, and managed an entrepreneurial capstone project. In summation, our team has the academic background required to design a novel blockchain, the practical experience to implement the design, the track record to manage the project from start to finish, and the industry/academic connections needed to refine and deploy the early stages of the protocol.
 
 ### Team Code Repos
 
@@ -94,76 +93,65 @@ Team member's repos
 
 ## Development Status :open_book:
 
-Thus far, the project has produced two MVPs, with largely complementary functionality. The first is a proof-of-concept for the consensus mechanisms outlined in our white paper. This node software is implemented in Python. It performs the basic functions of P2P connectivity, public key/ private key encryption, memory commitments, and gossiping. In addition, it maintains consensus over a synchronized network clock, broadcast relays, chain commitments, epoch voting, simple proof of engagement, reorgs, and fork requests. It builds blocks in parallel epoch processes and is robust to 33% attacks on safety and liveness. The current version can be found here: https://github.com/SirLemmings/Semaphore-Demo/, and a demo of the older version can be seen here: https://github.com/SirLemmings/Semaphore-Demo/.
-	The second MVP is a sequencer version of the protocol which implements the more advanced parts of the chain infrastructure, but in a centralized way. It tracks state transitions, mints aliases, and produces blocks. The client software is able to submit broadcasts and request the state of the chain, as a basic backend for apps building on top of the protocol. Both are running on AWS. The current version can be found here: https://github.com/SirLemmings/Semaphore-Demo/.
-	Most parts of the core Semaphore node functions are implemented in the proof-of-concept and/or sequence version. There are a few missing elements, such as peer bootstrapping and discovery, bandwidth optimization, extra primitives, blockspace allocation, and alias tokenization/checkpointing via Ethereum. A full initial testnet would combine the functionality from the two MVPs along with these elements. A mature version of the Semaphore network would require a full rewrite in Rust along with several planned optimizations.
-
+Thus far, the project has produced two MVPs, with largely complementary functionality. The first is a proof-of-concept for the consensus mechanisms outlined in our white paper. This node software is implemented in Python. It performs the basic functions of P2P connectivity, public key/ private key encryption, memory commitments, and gossiping. In addition, it maintains consensus over a synchronized network clock, broadcast relays, chain commitments, epoch voting, simple proof of engagement, reorgs, and fork requests. It builds blocks in parallel epoch processes and is robust to 33% attacks on safety and liveness. The current version can be found [here](https://github.com/SirLemmings/Semaphore), and a demo of the older version can be seen [here](https://youtu.be/gjo0V2Z3iJE).
+	The second MVP is a sequencer version of the protocol which implements the more advanced parts of the chain infrastructure, but in a centralized way. It tracks state transitions, mints aliases, and produces blocks. The client software is able to submit broadcasts and request the state of the chain, as a basic backend for apps building on top of the protocol. Both are running on AWS. The current version can be found [here](https://github.com/SirLemmings/semaphore_sequencer).
+	Most parts of the core Semaphore node functions are implemented in the proof-of-concept and/or sequence version. There are a few missing elements, such as peer bootstrapping and discovery, bandwidth optimization, extra primitives, blockspace allocation, and alias tokenization/checkpointing via Polkadot. A full initial testnet would combine the functionality from the two MVPs along with these elements. A mature version of the Semaphore network would require a full rewrite in Rust along with several planned optimizations.
 
 ## Development Roadmap :nut_and_bolt:
 
-This section should break the development roadmap down into milestones and deliverables. To assist you in defining it, we have created a document with examples for some grant categories [here](../docs/Support%20Docs/grant_guidelines_per_category.md). Since these will be part of the agreement, it helps to describe _the functionality we should expect in as much detail as possible_, plus how we can verify and test that functionality. Whenever milestones are delivered, we refer to this document to ensure that everything has been delivered as expected.
-
-Below we provide an **example roadmap**. In the descriptions, it should be clear how your project is related to Substrate, Kusama or Polkadot. We _recommend_ that teams structure their roadmap as 1 milestone ≈ 1 month.
-
-> :exclamation: If any of your deliverables is based on somebody else's work, make sure you work and publish _under the terms of the license_ of the respective project and that you **highlight this fact in your milestone documentation** and in the source code if applicable! **Teams that submit others' work without attributing it will be immediately terminated.**
+This scope of the grant will have an estimated timeline of four months. Combining, publishing, and launching a full Python node implementation and test net will take two months. Next, designing, writing, and deploying a Polkadot smart contract to manage aliases would take 2 months. Paying for 8 part-time man-months (FTE of 1 person) would amount to $26K plus an overhead of 15%. Factoring in miscellaneous costs would likely add another $1K. Given extra resources, we would also seek to expand our team from two to four people and publicize/market the project more aggressively. In total, the requested amount in USD for the project would be $30K.
 
 ### Overview
 
-- **Total Estimated Duration:** Duration of the whole project (e.g. 2 months)
-- **Full-Time Equivalent (FTE):**  Average number of full-time employees working on the project throughout its duration (see [Wikipedia](https://en.wikipedia.org/wiki/Full-time_equivalent), e.g. 2 FTE)
-- **Total Costs:** Requested amount in USD for the whole project (e.g. 12,000 USD). Note that the acceptance criteria and additional benefits vary depending on the [level](../README.md#level_slider-levels) of funding requested. This and the costs for each milestone need to be provided in USD; if the grant is paid out in Bitcoin, the amount will be calculated according to the exchange rate at the time of payment.
+- **Total Estimated Duration:** 4 months
+- **Full-Time Equivalent (FTE):**  1 FTE
+- **Total Costs:** 30,000 USD.
+### Milestone 1 — Python Testnet
 
-### Milestone 1 Example — Basic functionality
-
-- **Estimated duration:** 1 month
-- **FTE:**  1,5
-- **Costs:** 8,000 USD
-
-> :exclamation: **The default deliverables 0a-0d below are mandatory for all milestones**, and deliverable 0e at least for the last one. 
+- **Estimated duration:** 2 months
+- **FTE:**  1
+- **Costs:** 15,000 USD
 
 | Number | Deliverable | Specification |
 | -----: | ----------- | ------------- |
-| **0a.** | License | Apache 2.0 / GPLv3 / MIT / Unlicense |
-| **0b.** | Documentation | We will provide both **inline documentation** of the code and a basic **tutorial** that explains how a user can (for example) spin up one of our Substrate nodes and send test transactions, which will show how the new functionality works. |
+| **0a.** | License | MIT |
+| **0b.** | Documentation | We will provide both **inline documentation** of the code and a basic **tutorial** that explains how a user can (for example), request an alias, spin up one of our Semaphore nodes, and send broadcasts, which will show how the new functionality works. |
 | **0c.** | Testing and Testing Guide | Core functions will be fully covered by comprehensive unit tests to ensure functionality and robustness. In the guide, we will describe how to run these tests. |
-| **0d.** | Docker | We will provide a Dockerfile(s) that can be used to test all the functionality delivered with this milestone. |
-| 0e. | Article | We will publish an **article**/workshop that explains [...] (what was done/achieved as part of the grant). (Content, language and medium should reflect your target audience described above.) |
-| 1. | Substrate module: X | We will create a Substrate module that will... (Please list the functionality that will be implemented for the first milestone. You can refer to details provided in previous sections.) |
-| 2. | Substrate module: Y | The Y Substrate module will... |
-| 3. | Substrate module: Z | The Z Substrate module will... |
-| 4. | Substrate chain | Modules X, Y & Z of our custom chain will interact in such a way... (Please describe the deliverable here as detailed as possible) |
-| 5. | Library: ABC | We will deliver a JS library that will implement the functionality described under "ABC Library" |
-| 6. | Smart contracts: ... | We will deliver a set of ink! smart contracts that will...
-
+| **0d.** | Docker | We will provide a Dockerfile that can be used to test all the functionality delivered with this milestone. |
+| 0e. | Article | We will publish a series of **Medium posts** that explain what Semaphore is, what it solves, and how it can be used in a blog format targeting tech-focused users dissatisfied with the current social media landscape. |
+| 1. | Semaphore module: Networking | We will implement a peer-to-peer networking protocol into our nodes to support bootstrapping and consensus for remote nodes. |
+| 2. | Semaphore module: Consensus | We will complete the consensus mechanisms outlined in the Semaphore white paper and show guarantees of safety and liveness. |
+| 3. | Semaphore module: State Transitions | We will integrate the state transition functionality from the sequencer into the Semaphore node software |
+| 4. | Semaphore module: Alias Distribution | We will enable a central node with the ability to mint new aliases and bind them to pubkeys for external parties to request and use. |
+| 5. | Semaphore chain | Modules 1,2, and 3 will combine to form a completed Python implementation of nodes in the Semaphore network, and will be used to launch a testnet for any party to join and participate in broadcasting and consensus. Module 4 will serve as a centralized placeholder for the second milestone. |
 
 ### Milestone 2 Example — Additional features
 
-- **Estimated Duration:** 1 month
-- **FTE:**  1,5
-- **Costs:** 8,000 USD
+- **Estimated Duration:** 2 months
+- **FTE:**  1
+- **Costs:** 15,000 USD
 
-...
-
+| Number | Deliverable | Specification |
+| -----: | ----------- | ------------- |
+| **0a.** | License | MIT |
+| **0b.** | Documentation | We will provide both **inline documentation** of the code and a **light paper** detailing the design for alias distribution. |
+| **0c.** | Testing and Testing Guide | The contract will be first deployed on the Polkadot testnet and will be fully covered by unit tests to ensure functionality and robustness. In the guide, we will describe how to run these tests. |
+| **0d.** | Docker | We will provide a Dockerfile that can be used to test all the functionality delivered with this milestone. |
+| 0e. | Article | We will publish a **Medium post** that explains how Semaphore alias distribution works and its pivotal role in the security of the network. |
+| 1. | Substrate module: (De)activate | We will implement a peer-to-peer networking protocol into our nodes to support bootstrapping and consensus for remote nodes. |
+| 2. | Substrate module: Mint | We will complete the consensus mechanisms outlined in the Semaphore white paper and show guarantees of safety and liveness. |
+| 3. | Substrate module: Increase Supply | We will integrate the state transition functionality from the sequencer into the Semaphore node software |
+| 4. | Semaphore module: Alias Checkpointing | We will enable a central node with the ability to mint new aliases and bind them to pubkeys for external parties to request and use. |
+| 5. | Semaphore Alias Smart Contract | Modules 1,2, and 3 will be implemented as functions of the smart contract, following the system we design to manage Semaphore aliases. Module 4 will switch the Python test net from the centralized alias production to using the alias management contract deployed on Polkadot. |
 
 ## Future Plans
 
-Please include here
-
-- how you intend to use, enhance, promote and support your project in the short term, and
-- the team's long-term plans and intentions in relation to it.
-
-## Referral Program (optional) :moneybag: 
-
-You can find more information about the program [here](../README.md#moneybag-referral-program).
-- **Referrer:** Name of the Polkadot Ambassador or GitHub account of the Web3 Foundation grantee
-- **Payment Address:** BTC, Ethereum (USDT/USDC/DAI) or Polkadot/Kusama (aUSD) payment address. Please also specify the currency. (e.g. 0x8920... (DAI))
+Upon completion of the grant, we plan to launch the testnet and smart contracts, and immediately start distributing aliases. We also aim to write a full, optimized implementation of the protocol in Rust. After doing this, the goal is to decentralize and test the protocol as quickly as possible. This also means that we will be heavily publicizing the projects through channels such as online forums, academic conferences, hackathons, etc. Finally, we think it is crucial for us to build our own first app on top of the network. This will serve the basis for adding early users and allow us to provide third-party developers with the tools to build on top of Semaphore.
 
 ## Additional Information :heavy_plus_sign:
 
-**How did you hear about the Grants Program?** Web3 Foundation Website / Medium / Twitter / Element / Announcement by another team / personal recommendation / etc.
+**How did you hear about the Grants Program?**
 
-Here you can also add any additional information that you think is relevant to this application but isn't part of it already, such as:
+Web3 Foundation Website 
 
-- Work you have already done.
-- If there are any other teams who have already contributed (financially) to the project.
-- Previous grants you may have applied for.
+We have received no other financial investments at this time. We have received a research grant from Stanford IORH to design the karma system for feeless block space allocation. We have also applied for a grant from ESP.
