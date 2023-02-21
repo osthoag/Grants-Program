@@ -18,18 +18,9 @@ Semaphore will host an ecosystem of social apps that will solve the myriad of pr
 
 ### Project Details
 
-We expect the teams to already have a solid idea about your project's expected final state. Therefore, we ask the teams to submit (where relevant):
-
-- Mockups/designs of any UI components
-- Data models / API specifications of the core functionality
-- An overview of the technology stack to be used
-- Documentation of core components, protocols, architecture, etc. to be deployed
-- PoC/MVP or other relevant prior work or research on the topic
-- What your project is _not_ or will _not_ provide or implement
-  - This is a place for you to manage expectations and to clarify any limitations that might not be obvious
-
 Semaphore is a blockchain without a cryptocurrency. Instead, Semaphore uses “crypto-identities” or “aliases.” Each alias has a unique integer, a pubkey, and a human readable “nym.” The set of aliases is maintained on a separate type 2 network, such as Polkadot. However, aliases are much more than simple NFT’s (non-functional tokens), nodes that run the semaphore network sync the state of the alias smart contract and only accept broadcasts/connections signed by pubkeys belonging to valid aliases. This means that the state of a smart contract on Polkadot can control the set of valid users on the Semaphore network. The rules for the total number of aliases able to be minted can follow a predetermined function, be controlled by an alias vote, etc.
 
+**Protocol**
 The lifecycle of a broadcast starts when it is signed by a user. The message includes the user’s alias, signature, the message itself, and a timestamp. Time on Semaphore exists as discrete epochs of 6 seconds, so the timestamp says which epoch the broadcast occurs in. Next, the broadcast is relayed to Semaphore nodes, who will relay the message to their peers. This process is called the “initial relay.” At the end of the initial relay, it is possible that nodes will have seen different sets of broadcasts. The epoch vote is a BFT process that will allow nodes to reach consensus on which broadcasts were seen by a majority of nodes during the initial relay. Once the epoch vote has terminated, a block containing each accepted broadcast is constructed by each node. To reach consensus, nodes will iteratively sample each other in a process similar to the Avalanche consensus mechanism. At the end of the epoch vote process, with very high probability all broadcasts with a correct timestamp will be included in the block and all nodes will have produced identical blocks. 
 
 The epoch vote on its own is insufficient, however, because it is a subjective process: offline nodes cannot verify the output like they can with PoW or PoS. The missing piece is “proof of engagement.” Each block has a “chain commitment,” which is the hash of previous blocks. The chain commitment is analogous to the previous block hash in a typical blockchain. The chain commitment is also what broadcasts use as a timestamp. Chain commitments mean that if there is ever a blockchain fork, broadcasts are only valid on a single fork. When an alias makes a broadcast with a particular chain commitment, it is said to have committed to the fork that the chain commitment corresponds to. If there is a blockchain fork that has reached a sufficient depth, nodes will consider the chain that has more commitments after the fork to be valid, meaning it has the higher proof of engagement.
@@ -38,6 +29,13 @@ One of the purposes of Semaphore’s blockchain architecture is to enable spam p
 
 Another purpose of Semaphore’s blockchain architecture is to enable moderation. Moderation is important on social media, especially when users are able to post to a decentralized, censorship resistant system. The Semaphore philosophy is that users should have maximum control over the interactions with their own content and that different users should have the freedom to implement different rules according to their own values. Each alias is able to set a blocklist.  Additionally, a broadcast that is not a reply to another broadcast, can define a “paradigm,” or set of rules that apply to it and all descendent broadcasts (replies, replies to replies, etc). This means that users can moderate the discussions that take place under their broadcasts. Paradigms enable precise control over how interactions can occur. We think it is likely that different organizations would maintain sets of aliases that they consider to be spam, misinformation, hateful, etc.
 
+The full documentation on the Semaphore protocol and its security can be found in the [Semaphore White Paper](https://github.com/SirLemmings/Semaphore-Demo/blob/main/Semaphore%20White%20Paper.pdf).
+
+**Technology Stack**
+- ink! or Solidity
+- Python
+- AWS
+- Rust
 
 ### Ecosystem Fit
 
@@ -50,26 +48,27 @@ Help us locate your project in the Polkadot/Substrate/Kusama landscape and what 
   - If so, how is your project different?
   - If not, are there similar projects in related ecosystems?
 
-We are building a new type of L2 blockchain network to be a neutral communication layer for composable social apps. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (or an L2) to manage membership in the network. Additionally, this method of representing valid Semaphore identities will create a new type of nonfungible asset with more interesting properties and greater utility than those of the typical NFT.  Our protocol targets for membership the growing user base for decentralized social media by enabling on-chain social media. This also allows for interoperable apps to share the network effects from this unified pool of users. Thus, we aim to incentivize third party app developers to build on the protocol, resulting in a decentralized online social ecosystem.
+We are building a new type of L2 blockchain network to be a neutral communication layer for composable social apps. Our blockchain design allocates blockspace without the use of fees by utilizing an NFT-style smart contract on the Polkadot blockchain (more specifially one of its parachains) to manage membership in the network. Additionally, this method of representing valid Semaphore identities will create a new type of nonfungible asset with more interesting properties and greater utility than those of the typical NFT.  Our protocol targets for membership the growing user base for decentralized social media by enabling on-chain social media. This also allows for interoperable apps to share the network effects from this unified pool of users. Thus, we aim to incentivize third party app developers to build on the protocol, resulting in a decentralized online social ecosystem.
+
 The related projects in other ecosystems take two approaches. Decentralized/ ”decentralized” competitors use network designs that are ill suited to social apps. Lens protocol, for instance, is a prominent project that stores social interactions on Polygon using NFTs. Designs like Lens subject users to competition for blockspace with financial transactions, resulting in unpredictable fees. Other competing protocols simply use a P2P network with no consensus, which means broadcasts cannot be time stamped, that different apps' states can disagree about which broadcasts exist, and that each app must implement its own spam prevention techniques. This is the case with federated networks like Farcaster. Although Farcaster makes the same design choice to put identities on-chain, its lack of shared state cannot deliver the experience of Twitter in a truly decentralized manner. Our protocol differentiates itself from the alternatives by being a lightweight blockchain that allocates its blockspace without the use of fees. As a result the chain is accessible to users and running a service is easier because there is a guarantee of a shared state and no spam.
 
 ## Team :busts_in_silhouette:
 
 ### Team members
 
-- Name of team leader
-- Names of team members
+- Alex Dulisse
+- Oscar Aguilar
 
 ### Contact
 
-- **Contact Name:** Full name of the contact person in your team
-- **Contact Email:** Contact email (e.g. john@duo.com)
-- **Website:** Your website
+- **Contact Name:** Alex Dulisse
+- **Contact Email:** 37alexd@gmail.com
+- **Website:** [Semaphore Demo Page](https://sirlemmings.github.io/Semaphore-Demo/)
 
 ### Legal Structure
 
-- **Registered Address:** Address of your registered legal entity, if available. Please keep it in a single line. (e.g. High Street 1, London LK1 234, UK)
-- **Registered Legal Entity:** Name of your registered legal entity, if available. (e.g. Duo Ltd.)
+- **Registered Address:**
+- **Registered Legal Entity:**
 
 ### Team's experience
 
@@ -79,29 +78,26 @@ If anyone on your team has applied for a grant at the Web3 Foundation previously
 
 ### Team Code Repos
 
-- https://github.com/<your_organisation>/<project_1>
-- https://github.com/<your_organisation>/<project_2>
+- [Proof-of-Concept Implementation](https://github.com/SirLemmings/Semaphore)
+- [Sequencer Version](https://github.com/SirLemmings/semaphore_sequencer)
+- [Demo Repo](https://github.com/SirLemmings/Semaphore-Demo)
 
-Please also provide the GitHub accounts of all team members. If they contain no activity, references to projects hosted elsewhere or live are also fine.
+Team member's repos
 
-- https://github.com/<team_member_1>
-- https://github.com/<team_member_2>
+- https://github.com/SirLemmings
+- https://github.com/osthoag
 
 ### Team LinkedIn Profiles (if available)
 
 - https://www.linkedin.com/<person_1>
-- https://www.linkedin.com/<person_2>
-
+- https://www.linkedin.com/oscar-aguilar-76bb15170/
 
 ## Development Status :open_book:
 
-If you've already started implementing your project or it is part of a larger repository, please provide a link and a description of the code here. In any case, please provide some documentation on the research and other work you have conducted before applying. This could be:
+Thus far, the project has produced two MVPs, with largely complementary functionality. The first is a proof-of-concept for the consensus mechanisms outlined in our white paper. This node software is implemented in Python. It performs the basic functions of P2P connectivity, public key/ private key encryption, memory commitments, and gossiping. In addition, it maintains consensus over a synchronized network clock, broadcast relays, chain commitments, epoch voting, simple proof of engagement, reorgs, and fork requests. It builds blocks in parallel epoch processes and is robust to 33% attacks on safety and liveness. The current version can be found here: https://github.com/SirLemmings/Semaphore-Demo/, and a demo of the older version can be seen here: https://github.com/SirLemmings/Semaphore-Demo/.
+	The second MVP is a sequencer version of the protocol which implements the more advanced parts of the chain infrastructure, but in a centralized way. It tracks state transitions, mints aliases, and produces blocks. The client software is able to submit broadcasts and request the state of the chain, as a basic backend for apps building on top of the protocol. Both are running on AWS. The current version can be found here: https://github.com/SirLemmings/Semaphore-Demo/.
+	Most parts of the core Semaphore node functions are implemented in the proof-of-concept and/or sequence version. There are a few missing elements, such as peer bootstrapping and discovery, bandwidth optimization, extra primitives, blockspace allocation, and alias tokenization/checkpointing via Ethereum. A full initial testnet would combine the functionality from the two MVPs along with these elements. A mature version of the Semaphore network would require a full rewrite in Rust along with several planned optimizations.
 
-- links to improvement proposals or [RFPs](https://github.com/w3f/Grants-Program/tree/master/docs/RFPs) (requests for proposal),
-- academic publications relevant to the problem,
-- links to your research diary, blog posts, articles, forum discussions or open GitHub issues,
-- references to conversations you might have had related to this project with anyone from the Web3 Foundation,
-- previous interface iterations, such as mock-ups and wireframes.
 
 ## Development Roadmap :nut_and_bolt:
 
